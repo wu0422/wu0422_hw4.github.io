@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+  <table class="bg-gray-100 ml-20 mr-20 pt-12 flex flex-col  md:flex-col  items-center">
+    <thead>
+    <tr class="flex flex-row items-center">
+      <th class="ml-10 mr-10">ID</th>
+      <th class="ml-10 mr-10">Name</th>
+      <th class="ml-10 mr-10">Year</th>
+      <th class="ml-10 mr-10">Month</th>
+      <th class="ml-10 mr-10">Price</th>
+    </tr>
+    </thead>
+    <tbody >
+    <tr v-for="item in data" :key="item.id" class="flex flex-row place-content-between">
+      <td class="flex flex-col flex-auto mr-20" >{{ item.id }}</td>
+      <td class="flex flex-col flex-auto mr-20" >{{ item.name }}</td>
+      <td class="mr-32">{{ item.year }}</td>
+      <td class="mr-32">{{ item.month}}</td>
+      <td class="mr-18">{{ item.price}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        data: []
+      };
+    },
+    created() {
+      console.log("data");
+
+      const url = "http://localhost:3000/api"; // 資料傳送到的 URL
+      fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                this.data = data;
+                console.log("成功",data);
+              })
+              .catch(error => console.log("錯誤",error));
+    }
+  });
+
+  app.mount('#app');
+</script>
+
+</body>
+</html>
